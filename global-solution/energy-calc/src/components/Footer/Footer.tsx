@@ -26,7 +26,7 @@ export default function Footer() {
   ];
   
   return (
-    <footer className="flex flex-col items-center gap-6 bg-green-200 mx-auto p-4">
+    <footer className="flex flex-col items-center gap-6 bg-green-200 mx-auto p-4 w-full">
       <h1
         className="font-semibold text-3xl text-black"
       >
