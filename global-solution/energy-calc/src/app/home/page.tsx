@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import LoginForm from "@/components/LoginForm/LoginForm";
+import RegisterForm from "@/components/RegisterForm/RegisterForm";
 
 export default function Home() {
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false); 
 
   const handleOpenLogin = () => {
     setShowLoginModal(true);
@@ -15,6 +17,14 @@ export default function Home() {
     setShowLoginModal(false);
   };
 
+  const handleOpenRegister = () => {
+    setShowRegisterModal(true);
+  };
+
+  const handleCloseRegister = () => {
+    setShowRegisterModal(false);
+  };
+
   return (
     <main>
       <section className="flex items-center justify-between gap-4 max-w-6xl mx-auto p-4">
@@ -22,7 +32,7 @@ export default function Home() {
           <h1 className="text-4xl font-semibold">Renovando a sua energia!</h1>
           <h2 className="text-2xl font-semibold">
             Faça uma simulação para descobrir qual é o tipo de energia{" "}
-            <span className="text-green-500">renovável</span> é ideal para você!
+            <span className="text-green-500">renovável</span> ideal para você!
           </h2>
           <button
             onClick={handleOpenLogin}
@@ -84,7 +94,26 @@ export default function Home() {
       </section>
 
       {/* Modal de Login */}
-      {showLoginModal && <LoginForm onClose={handleCloseLogin} />}
+      {showLoginModal && (
+        <LoginForm
+          onClose={handleCloseLogin}
+          onSwitchToRegister={() => {
+            handleCloseLogin();
+            handleOpenRegister();
+          }}
+        />
+      )}
+
+      {/* Modal de Registro */}
+      {showRegisterModal && (
+        <RegisterForm
+          onClose={handleCloseRegister}
+          onSwitchToLogin={() => {
+            handleCloseRegister();
+            handleOpenLogin();
+          }}
+        />
+      )}
     </main>
   );
 }

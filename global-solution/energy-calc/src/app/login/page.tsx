@@ -62,9 +62,6 @@ export default function LoginModal({ isVisible, onClose }: { isVisible: boolean;
                 placeholder="Digite sua senha"
               />
             </div>
-            <Link href="#" className="text-green-500 text-sm">
-              Esqueci minha senha :(
-            </Link>
             <button
               type="submit"
               className="w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-600"
