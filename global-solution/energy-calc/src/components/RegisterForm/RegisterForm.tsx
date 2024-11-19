@@ -1,37 +1,77 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; // Atualizado para 'next/navigation'
+import { useUser } from "@/context/UserContext"; // Importa o contexto do usuário
 
-export default function RegisterForm({ onClose }: { onClose: () => void }) {
+export default function RegisterForm({
+  onClose,
+  onSwitchToLogin,
+}: {
+  onClose: () => void;
+  onSwitchToLogin?: () => void; // Propriedade opcional
+}) {
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
-    senha: "",
-    confirmarSenha: "",
+    senhaHash: "",
   });
 
-const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
+  const { setName } = useUser(); // Obtém a função para atualizar o nome no contexto
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+    setError(null); // Limpa o erro ao alterar os campos
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.senha !== formData.confirmarSenha) {
-      alert("As senhas não coincidem!");
+
+    if (!formData.nome || !formData.email || !formData.senhaHash) {
+      setError("Todos os campos são obrigatórios!");
       return;
     }
-    alert("Conta criada com sucesso!");
-    console.log("Dados enviados: ", formData);
-    onClose();
 
-    router.push("/profile")
+    setLoading(true);
 
+    try {
+      const response = await fetch("http://localhost:8080/usuarios", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome: formData.nome,
+          email: formData.email,
+          senhaHash: formData.senhaHash,
+        }),
+      });
+
+      if (response.ok) {
+        // Atualiza o nome no contexto
+        setName(formData.nome);
+
+        // Redireciona para a página de perfil
+        router.push("/profile");
+      } else if (response.status === 409) {
+        // Caso o servidor retorne conflito (e-mail já existe)
+        setError("Este e-mail já está cadastrado. Tente novamente.");
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "Erro ao criar usuário.");
+      }
+    } catch (err) {
+      setError("Erro de conexão com o servidor.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -64,8 +104,11 @@ const router = useRouter();
                 name="nome"
                 value={formData.nome}
                 onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2 outline-green-500"
+                className={`w-full border rounded-lg px-4 py-2 outline-green-500 ${
+                  error && "border-red-500"
+                }`}
                 placeholder="Digite seu nome"
+                required
               />
             </div>
             <div>
@@ -81,8 +124,11 @@ const router = useRouter();
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2 outline-green-500"
+                className={`w-full border rounded-lg px-4 py-2 outline-green-500 ${
+                  error?.includes("e-mail") && "border-red-500"
+                }`}
                 placeholder="exemplo@dominio.com"
+                required
               />
             </div>
             <div>
@@ -95,37 +141,31 @@ const router = useRouter();
               <input
                 type="password"
                 id="senha"
-                name="senha"
-                value={formData.senha}
+                name="senhaHash"
+                value={formData.senhaHash}
                 onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2 outline-green-500"
+                className={`w-full border rounded-lg px-4 py-2 outline-green-500 ${
+                  error && "border-red-500"
+                }`}
                 placeholder="Digite sua senha"
+                required
               />
             </div>
-            <div>
-              <label
-                htmlFor="confirmarSenha"
-                className="block text-left text-gray-700 font-medium"
-              >
-                Confirmar Senha
-              </label>
-              <input
-                type="password"
-                id="confirmarSenha"
-                name="confirmarSenha"
-                value={formData.confirmarSenha}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2 outline-green-500"
-                placeholder="Confirme sua senha"
-              />
-            </div>
+            {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
               type="submit"
               className="w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-600"
+              disabled={loading}
             >
-              Criar Conta
+              {loading ? "Carregando..." : "Criar Conta"}
             </button>
           </form>
+          <button
+            onClick={onSwitchToLogin}
+            className="mt-4 text-green-500 hover:underline"
+          >
+            Já tem uma conta? Faça login
+          </button>
         </div>
       </div>
     </div>
