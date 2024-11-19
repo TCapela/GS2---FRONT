@@ -3,25 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FaBars, FaTimes, FaHome } from "react-icons/fa";
+import { FaBars, FaTimes, FaHome, FaHistory } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const links = [
-    {
-      text: "Home",
-      url: "/",
-      icon: <FaHome />,
-    },
-    {
-      text: "Equipe",
-      url: "/membros",
-      icon: <FaPeopleGroup />,
-    },
-  ];
+  // Verifica se está na página de perfil para exibir o link do histórico de simulações
+  const isProfilePage = pathname.startsWith("/profile");
 
   return (
     <nav className="bg-green-200 py-4">
@@ -45,22 +35,30 @@ export default function Navbar() {
             isMenuOpen ? "flex" : "hidden"
           }`}
         >
-          {links.map((link) => (
-            <li key={link.url}>
+          <li>
+            <Link href="/" className="flex items-center space-x-2 hover:text-green-600">
+              <FaHome />
+              <span>Home</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/membros" className="flex items-center space-x-2 hover:text-green-600">
+              <FaPeopleGroup />
+              <span>Equipe</span>
+            </Link>
+          </li>
+          {/* Adiciona o link para Histórico apenas na página de perfil */}
+          {isProfilePage && (
+            <li>
               <Link
-                href={link.url}
-                className={`flex items-center space-x-2 transition ${
-                  pathname === link.url
-                    ? "text-black"
-                    : "hover:text-green-600"
-                }`}
-                onClick={() => setIsMenuOpen(false)} 
+                href="/profile/history"
+                className="flex items-center space-x-2 hover:text-green-600"
               >
-                {link.icon}
-                <span>{link.text}</span>
+                <FaHistory />
+                <span>Histórico de Simulações</span>
               </Link>
             </li>
-          ))}
+          )}
         </ul>
       </div>
     </nav>
