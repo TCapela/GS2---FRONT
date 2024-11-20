@@ -2,6 +2,7 @@
 
 import { useUser } from "@/context/UserContext";
 import SimulationForm from "@/components/SimulationForm/SimulationForm";
+import HistoricoSimulacoes from "./historico/page";
 
 export default function ProfilePage() {
   const { name } = useUser();
@@ -16,6 +17,7 @@ export default function ProfilePage() {
       {/* Formulário de Simulação */}
       <div className="mt-6">
         <SimulationForm />
+        
       </div>
     </div>
   );
