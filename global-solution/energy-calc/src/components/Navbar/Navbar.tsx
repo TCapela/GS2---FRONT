@@ -3,14 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FaBars, FaTimes, FaHome, FaHistory } from "react-icons/fa";
+import { FaBars, FaTimes, FaHome, FaHistory, FaPlusCircle } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 
 export default function Navbar() {
-  const pathname = usePathname();
+  const pathname = usePathname(); // Obtém o caminho atual da página
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Verifica se está na página de perfil para exibir o link do histórico de simulações
+  // Verifica se o usuário está na página de perfil
   const isProfilePage = pathname.startsWith("/profile");
 
   return (
@@ -35,29 +35,47 @@ export default function Navbar() {
             isMenuOpen ? "flex" : "hidden"
           }`}
         >
+          {/* Link Home */}
           <li>
             <Link href="/" className="flex items-center space-x-2 hover:text-green-600">
               <FaHome />
               <span>Home</span>
             </Link>
           </li>
+
+          {/* Link Equipe */}
           <li>
             <Link href="/membros" className="flex items-center space-x-2 hover:text-green-600">
               <FaPeopleGroup />
               <span>Equipe</span>
             </Link>
           </li>
-          {/* Adiciona o link para Histórico apenas na página de perfil */}
+
+          {/* Links Específicos para o Profile */}
           {isProfilePage && (
-            <li>
-              <Link
-                href="/profile/history"
-                className="flex items-center space-x-2 hover:text-green-600"
-              >
-                <FaHistory />
-                <span>Histórico de Simulações</span>
-              </Link>
-            </li>
+            <>
+              {/* Link Histórico */}
+              <li>
+                <Link
+                  href="/profile/historico"
+                  className="flex items-center space-x-2 hover:text-green-600"
+                >
+                  <FaHistory />
+                  <span>Histórico de Simulações</span>
+                </Link>
+              </li>
+
+              {/* Link Simular */}
+              <li>
+                <Link
+                  href="/profile"
+                  className="flex items-center space-x-2 hover:text-green-600"
+                >
+                  <FaPlusCircle />
+                  <span>Simular</span>
+                </Link>
+              </li>
+            </>
           )}
         </ul>
       </div>
