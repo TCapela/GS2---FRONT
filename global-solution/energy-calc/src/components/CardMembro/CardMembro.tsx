@@ -10,7 +10,7 @@ type CardMembroProps = {
 
 export default function CardMembro({ name, rm, githubLink, image }: CardMembroProps) {
   return (
-    <div className="flex flex-col pt-10 sm:pt-4 sm:flex-row items-center justify-around gap-4 relative bg-black text-white p-4 group even:sm:flex-row-reverse rounded-2xl">
+    <div className="flex flex-col pt-10 sm:pt-4 sm:flex-row items-center justify-around gap-4 relative bg-green-950 text-white p-4 group even:sm:flex-row-reverse rounded-2xl">
       <div className="flex flex-col items-center w-full sm:w-2/4 ">
         <h1 className="font-semibold">{name}</h1>
         <h2>RM {rm}</h2>
