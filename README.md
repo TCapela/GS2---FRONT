@@ -68,7 +68,7 @@ EnergyCalc é uma aplicação voltada para simulações de consumo de energia co
    - Controle de acesso seguro.
 
     ![Modal de Login](./public/imgs/readme-imgs/login-modal.png "Modal de Login do EnergyCalc")
-    ![Modal de Cadastro](./public/imgs/readme-imgs/cadastro-modal.png "Modal de Cadastro do EnergyCalc")
+    ![Modal de Cadastro]([./public/imgs/readme-imgs/cadastro-modal.png](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/cadastro-modal.png) "Modal de Cadastro do EnergyCalc")
 
 4. **Mensagens Dinâmicas**
    - Exibe mensagens claras sem o uso de `alert()`.
