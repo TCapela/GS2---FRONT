@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
+import stateList from "@/data/states.json";
+import { useRouter } from "next/navigation";
 
 export default function SimulationForm() {
   const { id: currentUserId } = useUser();
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     tipoCliente: "",
@@ -14,6 +17,7 @@ export default function SimulationForm() {
     orcamento: "",
   });
 
+  const [editingId, setEditingId] = useState<number | null>(null); // Para identificar se estamos editando uma simulação
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,6 +34,23 @@ export default function SimulationForm() {
   const [averageResult, setAverageResult] = useState<any>(null);
   const [averageError, setAverageError] = useState<string | null>(null);
   const [averageLoading, setAverageLoading] = useState(false);
+
+  useEffect(() => {
+    // Verifica se há simulação salva no sessionStorage (para edição)
+    const simulacaoEdicao = sessionStorage.getItem("simulacaoEdicao");
+    if (simulacaoEdicao) {
+      const simulacao = JSON.parse(simulacaoEdicao);
+      setEditingId(simulacao.id); // Define o ID da simulação em edição
+      setFormData({
+        tipoCliente: simulacao.tipoCliente,
+        localizacao: simulacao.localizacao,
+        custoMensal: String(simulacao.custoMensal),
+        tipoEnergiaEscolhida: simulacao.tipoEnergiaEscolhida,
+        orcamento: String(simulacao.orcamento),
+      });
+      sessionStorage.removeItem("simulacaoEdicao"); // Remove após carregar os dados
+    }
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -55,18 +76,6 @@ export default function SimulationForm() {
     setLoading(true);
     setError(null);
 
-    if (!formData.tipoCliente || formData.tipoCliente === "Selecione") {
-      setError("Por favor, selecione o tipo de cliente.");
-      setLoading(false);
-      return;
-    }
-
-    if (!formData.tipoEnergiaEscolhida || formData.tipoEnergiaEscolhida === "Selecione") {
-      setError("Por favor, selecione o tipo de energia.");
-      setLoading(false);
-      return;
-    }
-
     try {
       const body = {
         ...formData,
@@ -79,13 +88,14 @@ export default function SimulationForm() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          usuarioId: String(currentUserId),
         },
         body: JSON.stringify(body),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        setError(errorData.error || "Erro ao realizar a simulação.");
+        setError(errorData.error || "Erro ao salvar a simulação.");
         return;
       }
 
@@ -140,10 +150,18 @@ export default function SimulationForm() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-4 flex flex-col lg:flex-row gap-4">
+    <div className="max-w-6xl mx-auto p-4 flex flex-col lg:flex-row gap-20 mt-10">
       {/* Primeiro Formulário */}
       <div className="flex-1">
-        <h2 className="text-2xl font-bold mb-4">Realizar Simulação</h2>
+        <h2 className="text-2xl font-bold mb-4">
+          {editingId ? "Editar Simulação" : "Realizar Simulação"}
+        </h2>
+        {error && (
+          <div className="mb-4 p-4 text-red-700 bg-red-100 rounded-lg">
+            <p>{error}</p>
+          </div>
+        )}
+    
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block font-medium mb-1">Tipo de Energia</label>
@@ -176,19 +194,26 @@ export default function SimulationForm() {
           </div>
           <div>
             <label className="block font-medium mb-1">Localização</label>
-            <input
-              type="text"
+            <select
               name="localizacao"
               value={formData.localizacao}
               onChange={(e) => handleChange(e)}
               className="w-full border rounded-lg px-4 py-2"
               required
-            />
+            >
+              <option value="">Selecione o estado</option>
+              {stateList.map((state) => (
+                <option key={state.uf} value={state.state}>
+                  {state.state}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label className="block font-medium mb-1">Custo Mensal (R$)</label>
             <input
               type="number"
+              min="0"
               name="custoMensal"
               value={formData.custoMensal}
               onChange={(e) => handleChange(e)}
@@ -200,6 +225,7 @@ export default function SimulationForm() {
             <label className="block font-medium mb-1">Orçamento Disponível (R$)</label>
             <input
               type="number"
+              min="0"
               name="orcamento"
               value={formData.orcamento}
               onChange={(e) => handleChange(e)}
@@ -223,13 +249,16 @@ export default function SimulationForm() {
               <strong>Tipo de Energia Escolhida:</strong> {result.tipoEnergiaEscolhida || "N/A"}
             </p>
             <p>
+              <strong>Tipo do Cliente:</strong> {result.tipoCliente || "N/A"}
+            </p>
+            <p>
               <strong>Economia Anual:</strong> R$ {result.economiaAnual?.toFixed(2) || "N/A"}
             </p>
             <p>
               <strong>Custo de Instalação:</strong> R$ {result.custoInstalacaoRecomendada?.toFixed(2) || "N/A"}
             </p>
             <p>
-              <strong>Tempo de Retorno:</strong> {result.tempoRetornoRecomendado?.toFixed(2) || "N/A"} anos
+              <strong>Tempo de Retorno:</strong> {result.tempoRetornoRecomendado?.toFixed(2) || "N/A"}
             </p>
           </div>
         )}
@@ -244,6 +273,7 @@ export default function SimulationForm() {
               <label className="block font-medium mb-1">Gasto Mês {idx + 1} (R$)</label>
               <input
                 type="number"
+                min="0"
                 name={field}
                 value={averageData[field]}
                 onChange={(e) => handleChange(e, true)}
@@ -257,6 +287,7 @@ export default function SimulationForm() {
               <label className="block font-medium mb-1">Consumo Mês {idx + 1} (kWh)</label>
               <input
                 type="number"
+                min="0"
                 name={field}
                 value={averageData[field]}
                 onChange={(e) => handleChange(e, true)}
