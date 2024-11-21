@@ -13,7 +13,7 @@ EnergyCalc é uma aplicação voltada para simulações de consumo de energia co
 - **Vercel:** https://energy-calc-sigma.vercel.app/home
 - **Github:** https://github.com/TCapela/GS2---FRONT.git
 - **Youtube:** https://youtu.be/sQr8eLlwe48
-
+- **Server do java:** https://github.com/raphatatto/gs-java.git
 ## **Objetivo do Projeto**
 
 - Fornecer uma ferramenta intuitiva e acessível para simular diferentes tipos de energia.
