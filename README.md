@@ -4,9 +4,7 @@
 
 EnergyCalc é uma aplicação voltada para simulações de consumo de energia com foco em sustentabilidade. O sistema permite que os usuários calculem e comparem os custos e benefícios de diferentes tipos de energia, como solar, eólica e hídrica. Além disso, fornece um histórico das simulações realizadas, ajudando os usuários a tomarem decisões baseadas em dados reais.
 
-![home](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/home.png "home")
-
-
+![home](https://github.com/TCapela/GS2---FRONT/blob/main/global-solution/energy-calc/public/imgs/readme-imgs/home.png "home")
 
 ---
 
@@ -59,18 +57,18 @@ EnergyCalc é uma aplicação voltada para simulações de consumo de energia co
 1. **Simulação de Consumo**
    - Permite calcular o consumo e os custos com base nos dados fornecidos pelo usuário.
 
-   ![profile](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/profile.png "profile")
+   ![profile](https://github.com/TCapela/GS2---FRONT/blob/main/global-solution/energy-calc/public/imgs/readme-imgs/profile.png "profile")
 
 2. **Histórico de Simulações**
    - Exibe uma lista de simulações realizadas pelo usuário.
 
-    ![historico](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/historico.png "historico")
+   ![historico](https://github.com/TCapela/GS2---FRONT/blob/main/global-solution/energy-calc/public/imgs/readme-imgs/historico.png "historico")
 
 3. **Login e Registro**
    - Controle de acesso seguro.
 
-     ![login](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/login-modal.png "login")
-     ![cadastro](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/cadastro-modal.png "cadastro")
+     ![login](https://github.com/TCapela/GS2---FRONT/blob/main/global-solution/energy-calc/public/imgs/readme-imgs/login-modal.png "login")
+     ![cadastro](https://github.com/TCapela/GS2---FRONT/blob/main/global-solution/energy-calc/public/imgs/readme-imgs/cadastro-modal.png "cadastro")
 
 4. **Mensagens Dinâmicas**
    - Exibe mensagens claras sem o uso de `alert()`.
@@ -78,12 +76,13 @@ EnergyCalc é uma aplicação voltada para simulações de consumo de energia co
 5. **Modal de Exclusão**
    - Confirma exclusões de forma intuitiva e amigável.
 
-   ![excluir](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/excluir-historico.png "excluir")
+   ![excluir](https://github.com/TCapela/GS2---FRONT/blob/main/global-solution/energy-calc/public/imgs/readme-imgs/excluir-historico.png "excluir")
 
 6. **Modal de Edição**
-   - Edita as informções das simulções.
+   - Edita as informações das simulações.
 
-    ![editar](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/editar-historico.png "editar")
+   ![editar](https://github.com/TCapela/GS2---FRONT/blob/main/global-solution/energy-calc/public/imgs/readme-imgs/editar-historico.png "editar")
+
 ---
 
 ## **Como Executar o Projeto**
