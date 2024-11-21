@@ -4,7 +4,7 @@
 
 EnergyCalc é uma aplicação voltada para simulações de consumo de energia com foco em sustentabilidade. O sistema permite que os usuários calculem e comparem os custos e benefícios de diferentes tipos de energia, como solar, eólica e hídrica. Além disso, fornece um histórico das simulações realizadas, ajudando os usuários a tomarem decisões baseadas em dados reais.
 
-![Texto Alternativo](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/cadastro-modal.png "Título Opcional")
+![home](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/home.png "home")
 
 
 
@@ -59,18 +59,18 @@ EnergyCalc é uma aplicação voltada para simulações de consumo de energia co
 1. **Simulação de Consumo**
    - Permite calcular o consumo e os custos com base nos dados fornecidos pelo usuário.
 
-   ![Simulação de Consumo](./public/imgs/readme-imgs/profile.png "Tela de Simulação de Consumo do EnergyCalc")
+   ![profile](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/profile.png "profile")
 
 2. **Histórico de Simulações**
    - Exibe uma lista de simulações realizadas pelo usuário.
 
-   ![historico](./public/imgs/readme-imgs/historico.png "Tela de histrico do EnergyCalc")
+    ![historico](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/historico.png "historico")
 
 3. **Login e Registro**
    - Controle de acesso seguro.
 
-    ![Modal de Login](./public/imgs/readme-imgs/login-modal.png "Modal de Login do EnergyCalc")
-    ![Modal de Cadastro]([./public/imgs/readme-imgs/cadastro-modal.png](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/cadastro-modal.png) "Modal de Cadastro do EnergyCalc")
+     ![login](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/login-modal.png "login")
+     ![cadastro](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/cadastro-modal.png "cadastro")
 
 4. **Mensagens Dinâmicas**
    - Exibe mensagens claras sem o uso de `alert()`.
@@ -78,12 +78,12 @@ EnergyCalc é uma aplicação voltada para simulações de consumo de energia co
 5. **Modal de Exclusão**
    - Confirma exclusões de forma intuitiva e amigável.
 
-   ![excluir](./public/imgs/readme-imgs/excluir-historico.png "Tela de exluir do EnergyCalc")
+   ![excluir](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/excluir-historico.png "excluir")
 
 6. **Modal de Edição**
    - Edita as informções das simulções.
 
-   ![excluir](./public/imgs/readme-imgs/editar-historico.png "Tela de editar do EnergyCalc")
+    ![editar](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/editar-historico.png "editar")
 ---
 
 ## **Como Executar o Projeto**
