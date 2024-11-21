@@ -18,8 +18,6 @@ export const metadata: Metadata = {
   description: "Descubra qual energia renovável utilizar",
 };
 
-
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">

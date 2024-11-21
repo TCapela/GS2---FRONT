@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 export default function LoadingPage() {
   const router = useRouter();
   const [isOnline, setIsOnline] = useState(true); // Verifica a conexão com a internet
-  const [loading, setLoading] = useState(true); // Simula o carregamento do conteúdo
+  const [loading, setLoading] = useState(false); // Controla o estado de carregamento
 
   useEffect(() => {
     // Detecta mudanças no estado da conexão
@@ -16,15 +16,24 @@ export default function LoadingPage() {
     window.addEventListener("online", handleOnline);
     window.addEventListener("offline", handleOffline);
 
-    // Simula o carregamento
-    const timer = setTimeout(() => {
-      setLoading(false); // Finaliza o carregamento
-      router.push("/home"); // Redireciona para a página principal
-    }, 5000); // 5 segundos de carregamento (ajuste conforme necessário)
+    // Detecta se a página foi carregada diretamente ou via navegação
+    const entries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+    const isDirectNavigation = entries.some(
+      (entry) => entry.type === "reload" || entry.type === "navigate"
+    );
+
+    if (isDirectNavigation) {
+      setLoading(true); // Exibe a tela de carregamento apenas em recarregamentos
+      const timer = setTimeout(() => {
+        setLoading(false); // Finaliza o carregamento
+        router.push("/home"); // Redireciona para a página principal
+      }, 5000); // Ajuste o tempo de carregamento conforme necessário
+
+      return () => clearTimeout(timer); // Cleanup do timer
+    }
 
     // Cleanup dos listeners
     return () => {
-      clearTimeout(timer);
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
     };
@@ -75,5 +84,5 @@ export default function LoadingPage() {
     );
   }
 
-  return null; // Redirecionamento em andamento
+  return null; // Nenhuma tela de carregamento será exibida ao clicar em links
 }
