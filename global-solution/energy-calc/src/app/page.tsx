@@ -29,7 +29,7 @@ export default function LoadingPage() {
         router.push("/home"); // Redireciona para a página principal
       }, 5000); // Ajuste o tempo de carregamento conforme necessário
 
-      return () => clearTimeout(timer); // Cleanup do timer
+      return () => clearTimeout(timer); 
     }
 
     // Cleanup dos listeners
