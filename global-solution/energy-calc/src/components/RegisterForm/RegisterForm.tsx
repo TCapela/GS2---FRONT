@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Atualizado para 'next/navigation'
 import { useUser } from "@/context/UserContext"; // Importa o contexto do usuário
 
 export default function RegisterForm({
@@ -20,15 +19,16 @@ export default function RegisterForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const router = useRouter();
-  const { setName } = useUser(); // Obtém a função para atualizar o nome no contexto
+  
+  const { setName } = useUser(); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-    setError(null); // Limpa o erro ao alterar os campos
+    setError(null); 
+    // Limpa o erro ao alterar os campos
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -55,11 +55,12 @@ export default function RegisterForm({
       });
 
       if (response.ok) {
-        // Atualiza o nome no contexto
         setName(formData.nome);
-
-        // Redireciona para a página de perfil
-        router.push("/profile");
+        setFormData({nome:"", email:"", senhaHash: ""});
+        setTimeout(()=>{
+          if (onSwitchToLogin) onSwitchToLogin(); 
+        },2000)
+    
       } else if (response.status === 409) {
         // Caso o servidor retorne conflito (e-mail já existe)
         setError("Este e-mail já está cadastrado. Tente novamente.");

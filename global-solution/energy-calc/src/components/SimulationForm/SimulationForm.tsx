@@ -3,11 +3,10 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
 import stateList from "@/data/states.json";
-import { useRouter } from "next/navigation";
+
 
 export default function SimulationForm() {
   const { id: currentUserId } = useUser();
-  const router = useRouter();
 
   const [formData, setFormData] = useState({
     tipoCliente: "",

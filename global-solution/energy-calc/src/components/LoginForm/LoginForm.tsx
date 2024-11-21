@@ -15,6 +15,7 @@ export default function LoginForm({
 }: {
   onClose: () => void;
   onSwitchToRegister?: () => void;
+  onSwitchToLogin?: () => void;
 }) {
   const [formData, setFormData] = useState({
     email: "",
@@ -24,7 +25,7 @@ export default function LoginForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { setName, setId, setUser } = useUser();
+  const { setUser } = useUser();
 
   const router = useRouter();
 
