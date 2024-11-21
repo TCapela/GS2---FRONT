@@ -4,7 +4,8 @@
 
 EnergyCalc é uma aplicação voltada para simulações de consumo de energia com foco em sustentabilidade. O sistema permite que os usuários calculem e comparem os custos e benefícios de diferentes tipos de energia, como solar, eólica e hídrica. Além disso, fornece um histórico das simulações realizadas, ajudando os usuários a tomarem decisões baseadas em dados reais.
 
-![Tela Inicial do EnergyCalc](https://raw.githubusercontent.com/Tcapela/GS2---FRONT/main/energy-calc/tela-inicial.png "Tela Inicial do EnergyCalc")
+![Texto Alternativo](https://github.com/TCapela/GS2---FRONT/blob/main/energy-calc/cadastro-modal.png "Título Opcional")
+
 
 
 ---
