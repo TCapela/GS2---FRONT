@@ -1,40 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EnergyCalc 🌍⚡
 
-## Getting Started
+## **Descrição do Projeto**
 
-First, run the development server:
+EnergyCalc é uma aplicação voltada para simulações de consumo de energia com foco em sustentabilidade. O sistema permite que os usuários calculem e comparem os custos e benefícios de diferentes tipos de energia, como solar, eólica e hídrica. Além disso, fornece um histórico das simulações realizadas, ajudando os usuários a tomarem decisões baseadas em dados reais.
 
+![Tela Inicial](./public/imgs/readme-imgs/home.png "Tela Inicial do EnergyCalc")
+
+---
+
+## **Links**
+
+- **Vercel** https://energy-calc-sigma.vercel.app/home
+- **Github** https://github.com/TCapela/GS2---FRONT.git
+- **Youtube** 
+
+## **Objetivo do Projeto**
+
+- Fornecer uma ferramenta intuitiva e acessível para simular diferentes tipos de energia.
+- Aumentar a conscientização sobre a importância do uso de energia renovável.
+- Auxiliar na tomada de decisão para reduzir custos energéticos.
+
+---
+
+## **Equipe de Desenvolvimento**
+
+| Nome                       | RM       | Turma  |
+|----------------------------|----------|--------|
+| Raphaela Oliveira Tatto    | RM554983 | 1TDSPO |
+| Lucas Rodrigues de Souza   | RM557951 | 1TDSPO |
+| Tiago Ribeiro Capela       | RM558021 | 1TDSPO |
+
+---
+
+## **Tecnologias Utilizadas**
+
+### **Frontend**
+- **React.js** com **Next.js** ⚛️
+- **TypeScript** para tipagem estática 🛠️
+- **Tailwind CSS** para estilização responsiva 🎨
+
+### **Backend**
+- **Java** com **Jakarta EE** ☕
+- **JPA (Java Persistence API)** para interação com o banco de dados 📦
+- **H2 Database** para desenvolvimento local e **OracleDatabase** para produção 🗄️
+- **API RESTful** com suporte a CORS
+
+### **Bibliotecas Adicionais**
+- **Vercel** para deploy contínuo 🚀
+- **MARP** para apresentação dinâmica de documentação 📄
+- **Postman** para testes de API 🔧
+
+---
+
+## **Funcionalidades**
+
+1. **Simulação de Consumo**
+   - Permite calcular o consumo e os custos com base nos dados fornecidos pelo usuário.
+
+   ![Simulação de Consumo](./public/imgs/readme-imgs/profile.png "Tela de Simulação de Consumo do EnergyCalc")
+
+2. **Histórico de Simulações**
+   - Exibe uma lista de simulações realizadas pelo usuário.
+
+   ![historico](./public/imgs/readme-imgs/historico.png "Tela de histrico do EnergyCalc")
+
+3. **Login e Registro**
+   - Controle de acesso seguro.
+
+    ![Modal de Login](./public/imgs/readme-imgs/login-modal.png "Modal de Login do EnergyCalc")
+    ![Modal de Cadastro](./public/imgs/readme-imgs/cadastro-modal.png "Modal de Cadastro do EnergyCalc")
+
+4. **Mensagens Dinâmicas**
+   - Exibe mensagens claras sem o uso de `alert()`.
+
+5. **Modal de Exclusão**
+   - Confirma exclusões de forma intuitiva e amigável.
+
+   ![excluir](./public/imgs/readme-imgs/excluir-historico.png "Tela de exluir do EnergyCalc")
+
+6. **Modal de Edição**
+   - Edita as informções das simulções.
+   
+   ![excluir](./public/imgs/readme-imgs/editar-historico.png "Tela de editar do EnergyCalc")
+---
+
+## **Como Executar o Projeto**
+
+### **Requisitos**
+
+- Node.js versão 16+ 🔧
+- Java 17+ ☕
+- Oracle Database 🎲
+- Navegador atualizado 🌐
+
+### **Passos para Instalação**
+
+#### **1. Clone o repositório**
 ```bash
+git clone https://github.com/TCapela/GS2---FRONT.git
+cd global-solution
+cd energy-calc
+npm i
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-
-## amanha o que fazer?
-
