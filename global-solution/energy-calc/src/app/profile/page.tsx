@@ -8,7 +8,6 @@ export default function ProfilePage() {
   const { name, setUser } = useUser();
 
   useEffect(() => {
-    // Recupera o usuário do localStorage ao carregar a página
     const storedUser = localStorage.getItem("currentUser");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -17,7 +16,7 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-6xl mx-auto p-4">
-      <h1 className="text-3xl font-bold">Bem-vindo, {name || "usuário"}!</h1>
+      <h1 className="text-3xl font-bold">Bem-vindo, {name}!</h1>
       <p className="text-lg mt-2">
         Aqui você pode acessar seu histórico de simulações e criar novas simulações.
       </p>

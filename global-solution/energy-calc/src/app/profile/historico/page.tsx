@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
+import stateList from "@/data/states.json"
 
 type Simulacao = {
   id: number;
@@ -23,9 +24,9 @@ export default function HistoricoSimulacoes() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [editingSimulacao, setEditingSimulacao] = useState<Simulacao | null>(null); // Para edição
-  const [isModalOpen, setIsModalOpen] = useState(false); // Controle do modal
-  const [selectedSimulacao, setSelectedSimulacao] = useState<Simulacao | null>(null); // Simulação selecionada
+  const [editingSimulacao, setEditingSimulacao] = useState<Simulacao | null>(null); 
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [selectedSimulacao, setSelectedSimulacao] = useState<Simulacao | null>(null); 
 
   useEffect(() => {
     if (!currentUserId) return;
@@ -34,7 +35,7 @@ export default function HistoricoSimulacoes() {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://localhost:8080/simulacao?usuarioId=${currentUserId}`
+          `http://localhost:8080/simulacao/usuario?usuarioId=${currentUserId}`
         );
         if (!response.ok) throw new Error("Erro ao carregar as simulações.");
         const data = await response.json();
@@ -165,20 +166,28 @@ export default function HistoricoSimulacoes() {
                   onChange={handleChange}
                   className="w-full border rounded-lg px-4 py-2"
                 >
+                  <option value="Selecione">Selecione</option>
                   <option value="Residencial">Residencial</option>
                   <option value="Comercial">Comercial</option>
                 </select>
               </div>
               <div>
-                <label className="block font-medium mb-1">Localização</label>
-                <input
-                  type="text"
-                  name="localizacao"
-                  value={editingSimulacao.localizacao}
-                  onChange={handleChange}
-                  className="w-full border rounded-lg px-4 py-2"
-                />
-              </div>
+            <label className="block font-medium mb-1">Localização</label>
+            <select
+              name="localizacao"
+              value={editingSimulacao.localizacao}
+              onChange={(e) => handleChange(e)}
+              className="w-full border rounded-lg px-4 py-2"
+              required
+            >
+              <option value="">Selecione o estado</option>
+              {stateList.map((state) => (
+                <option key={state.uf} value={state.state}>
+                  {state.state}
+                </option>
+              ))}
+            </select>
+          </div>
               <div>
                 <label className="block font-medium mb-1">Custo Mensal (R$)</label>
                 <input
