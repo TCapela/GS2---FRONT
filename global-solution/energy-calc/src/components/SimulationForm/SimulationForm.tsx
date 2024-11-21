@@ -5,6 +5,20 @@ import { useUser } from "@/context/UserContext";
 import stateList from "@/data/states.json";
 
 
+interface SimulationResult {
+  tipoEnergiaEscolhida: string;
+  tipoCliente: string;
+  economiaAnual: number;
+  custoInstalacaoRecomendada: number;
+  tempoRetornoRecomendado: number;
+}
+
+// Tipo esperado para o resultado do cálculo de média
+interface AverageResult {
+  mediaGasto: number;
+  mediaConsumo: number;
+}
+
 export default function SimulationForm() {
   const { id: currentUserId } = useUser();
 
@@ -17,9 +31,8 @@ export default function SimulationForm() {
   });
 
   const [editingId, setEditingId] = useState<number | null>(null); // Para identificar se estamos editando uma simulação
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<SimulationResult | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const [averageData, setAverageData] = useState<Record<string, string>>({
     gastoMes1: "",
@@ -30,10 +43,9 @@ export default function SimulationForm() {
     consumoKwhMes3: "",
   });
 
-  const [averageResult, setAverageResult] = useState<any>(null);
+  const [averageResult, setAverageResult] = useState<AverageResult | null>(null);
   const [averageError, setAverageError] = useState<string | null>(null);
   const [averageLoading, setAverageLoading] = useState(false);
-
   useEffect(() => {
     // Verifica se há simulação salva no sessionStorage (para edição)
     const simulacaoEdicao = sessionStorage.getItem("simulacaoEdicao");
@@ -66,14 +78,12 @@ export default function SimulationForm() {
         ...formData,
         [e.target.name]: e.target.value,
       });
-      setError(null);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
 
     try {
       const body = {
@@ -93,8 +103,7 @@ export default function SimulationForm() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.error || "Erro ao salvar a simulação.");
+        console.error("Erro ao cadastrar")
         return;
       }
 
@@ -102,7 +111,6 @@ export default function SimulationForm() {
       setResult(data);
     } catch (err) {
       console.error("Erro de conexão:", err);
-      setError("Erro de conexão com o servidor.");
     } finally {
       setLoading(false);
     }
@@ -155,12 +163,6 @@ export default function SimulationForm() {
         <h2 className="text-2xl font-bold mb-4">
           {editingId ? "Editar Simulação" : "Realizar Simulação"}
         </h2>
-        {error && (
-          <div className="mb-4 p-4 text-red-700 bg-red-100 rounded-lg">
-            <p>{error}</p>
-          </div>
-        )}
-    
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block font-medium mb-1">Tipo de Energia</label>
@@ -232,7 +234,6 @@ export default function SimulationForm() {
               required
             />
           </div>
-          {error && <p className="text-red-500">{error}</p>}
           <button
             type="submit"
             className="w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-600"

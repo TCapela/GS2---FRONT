@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
 import stateList from "@/data/states.json"
@@ -19,10 +18,8 @@ type Simulacao = {
 
 export default function HistoricoSimulacoes() {
   const { id: currentUserId } = useUser();
-  const router = useRouter();
   const [simulacoes, setSimulacoes] = useState<Simulacao[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [editingSimulacao, setEditingSimulacao] = useState<Simulacao | null>(null); 
   const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -40,9 +37,8 @@ export default function HistoricoSimulacoes() {
         if (!response.ok) throw new Error("Erro ao carregar as simulações.");
         const data = await response.json();
         setSimulacoes(data);
-        setError(null);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        console.error("Erro ao carregar a API", err)
       } finally {
         setLoading(false);
       }
@@ -73,8 +69,8 @@ export default function HistoricoSimulacoes() {
       );
       setIsModalOpen(false); // Fecha o modal após exclusão
       setSuccessMessage("Simulação excluída com sucesso!");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      console.error("Erro ao excluir a simulação", err)
     }
   };
 
@@ -113,8 +109,8 @@ export default function HistoricoSimulacoes() {
         prev.map((sim) => (sim.id === id ? { ...sim, ...updatedData } : sim))
       );
       setEditingSimulacao(null); // Feche o modo de edição
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      console.error("Erro ao atualizar", err)
     }
   };
 
@@ -134,12 +130,6 @@ export default function HistoricoSimulacoes() {
       {successMessage && (
         <div className="mb-4 p-4 text-green-700 bg-green-100 rounded-lg">
           {successMessage}
-        </div>
-      )}
-
-      {error && (
-        <div className="mb-4 p-4 text-red-700 bg-red-100 rounded-lg">
-          {error}
         </div>
       )}
 

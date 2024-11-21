@@ -77,7 +77,8 @@ export default function LoginForm({
         setError(errorData.message || "Erro ao fazer login.");
       }
     } catch (err) {
-      alert("Erro de conexão com o servidor.");
+      alert("Erro de conexão com o servidor."); 
+      console.error("Erro de conexão", err)
     } finally {
       setLoading(false);
     }

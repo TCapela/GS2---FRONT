@@ -70,6 +70,7 @@ export default function RegisterForm({
       }
     } catch (err) {
       setError("Erro de conexão com o servidor.");
+      console.error("Erro de conexao com o servidor", err)
     } finally {
       setLoading(false);
     }
