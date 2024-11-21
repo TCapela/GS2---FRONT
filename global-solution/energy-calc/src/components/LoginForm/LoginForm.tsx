@@ -4,6 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 
+type User = {
+  id: number;
+  name: string;
+};
 
 export default function LoginForm({
   onClose,
@@ -20,9 +24,15 @@ export default function LoginForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const {setName, setId} = useUser();
+  const { setName, setId, setUser } = useUser();
 
-  const router = useRouter(); // Adicionado para navegação
+  const router = useRouter();
+
+  // Função para salvar o usuário no contexto e localStorage
+  const handleLogin = (user: User) => {
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    setUser(user); // Atualiza o contexto com o usuário
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -50,17 +60,17 @@ export default function LoginForm({
         },
         body: JSON.stringify({
           email: formData.email,
-          senhaHash: formData.senha, 
+          senhaHash: formData.senha,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        setName(data.nome);
-        setId(data.id)
+        const user = { id: data.id, name: data.nome };
+        handleLogin(user); // Salva o usuário
         router.push("/profile");
-      } else if(response.status === 401){
-        setError("Email ou senha incorretos")
+      } else if (response.status === 401) {
+        setError("Email ou senha incorretos.");
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Erro ao fazer login.");
@@ -75,7 +85,6 @@ export default function LoginForm({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white w-11/12 sm:w-2/4 p-6 rounded-lg shadow-lg relative">
-
         {/* Botão para fechar o modal */}
         <button
           onClick={onClose}
@@ -90,7 +99,7 @@ export default function LoginForm({
           </h1>
         </div>
 
-        {/* Botões de Login e Registro*/}
+        {/* Botões de Login e Registro */}
         <div className="flex justify-center mb-6">
           <button className="px-6 py-2 bg-green-500 text-white rounded-l-lg hover:bg-green-600">
             Entrar
