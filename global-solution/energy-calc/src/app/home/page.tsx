@@ -32,7 +32,7 @@ export default function Home() {
           <h1 className="text-4xl font-semibold">Renovando a sua energia!</h1>
           <h2 className="text-2xl font-semibold">
             Faça uma simulação para descobrir qual é o tipo de energia{" "}
-            <span className="text-green-500">renovável</span> ideal para você!
+            <span className="text-green-500">renovável</span> é ideal para você!
           </h2>
           <button
             onClick={handleOpenLogin}
@@ -62,11 +62,11 @@ export default function Home() {
             />
             <div>
               <h1 className="text-2xl font-semibold">
-                Benefícios de se tornar uma empresa parceira
+                Quem somos?
               </h1>
               <h2>
-                Nós oferecemos uma oportunidade única de treinamento da equipe
-                mecânica e alavancamos a sua visibilidade no mercado!
+                Nós somos EnergyCalc, uma empresa onde você consegue calcular seus gastos de energia e descobrir qual é o tipo de energia renovável ideal para você! 
+                Assim preservando o meio ambiente.
               </h2>
             </div>
           </div>
