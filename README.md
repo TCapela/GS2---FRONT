@@ -83,6 +83,11 @@ EnergyCalc é uma aplicação voltada para simulações de consumo de energia co
 
    ![editar](https://github.com/TCapela/GS2---FRONT/blob/main/global-solution/energy-calc/public/imgs/readme-imgs/editar-historico.png "editar")
 
+7. **Página para ver a simulação**
+   - Utilização de rotas dinâmicas
+   
+   ![id](https://github.com/TCapela/GS2---FRONT/blob/main/global-solution/energy-calc/public/imgs/readme-imgs/simulacao-id.png "id")
+
 ---
 
 ## **Como Executar o Projeto**
