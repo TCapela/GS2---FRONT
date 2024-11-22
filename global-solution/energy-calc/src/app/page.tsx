@@ -1,88 +1,119 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import LoginForm from "@/components/LoginForm/LoginForm";
+import RegisterForm from "@/components/RegisterForm/RegisterForm";
+import Image from "next/image";
+import { useState } from "react";
 
 export default function LoadingPage() {
-  const router = useRouter();
-  const [isOnline, setIsOnline] = useState(true); // Verifica a conexão com a internet
-  const [loading, setLoading] = useState(false); // Controla o estado de carregamento
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false); 
 
-  useEffect(() => {
-    // Detecta mudanças no estado da conexão
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
+  const handleOpenLogin = () => {
+    setShowLoginModal(true);
+  };
 
-    window.addEventListener("online", handleOnline);
-    window.addEventListener("offline", handleOffline);
+  const handleCloseLogin = () => {
+    setShowLoginModal(false);
+  };
 
-    // Detecta se a página foi carregada diretamente ou via navegação
-    const entries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
-    const isDirectNavigation = entries.some(
-      (entry) => entry.type === "reload" || entry.type === "navigate"
-    );
+  const handleOpenRegister = () => {
+    setShowRegisterModal(true);
+  };
 
-    if (isDirectNavigation) {
-      setLoading(true); // Exibe a tela de carregamento apenas em recarregamentos
-      const timer = setTimeout(() => {
-        setLoading(false); // Finaliza o carregamento
-        router.push("/home"); // Redireciona para a página principal
-      }, 5000); // Ajuste o tempo de carregamento conforme necessário
+  const handleCloseRegister = () => {
+    setShowRegisterModal(false);
+  };
 
-      return () => clearTimeout(timer); 
-    }
+  return (
+    <main>
+      <section className="flex items-center justify-between gap-4 max-w-6xl mx-auto p-4">
+        <div className="flex flex-col items-start gap-4">
+          <h1 className="text-4xl font-semibold">Renovando a sua energia!</h1>
+          <h2 className="text-2xl font-semibold">
+            Faça uma simulação para descobrir qual é o tipo de energia{" "}
+            <span className="text-green-500">renovável</span> é ideal para você!
+          </h2>
+          <button
+            onClick={handleOpenLogin}
+            className="text-xl font-semibold p-2 rounded-xl bg-green-500 text-white transition hover:bg-green-600"
+          >
+            Vamos lá!
+          </button>
+        </div>
+        <Image
+          className="hidden sm:block"
+          src="/imgs/welcome.svg"
+          alt="Homem dando oi"
+          width={300}
+          height={400}
+        />
+      </section>
 
-    // Cleanup dos listeners
-    return () => {
-      window.removeEventListener("online", handleOnline);
-      window.removeEventListener("offline", handleOffline);
-    };
-  }, [router]);
-
-  if (!isOnline) {
-    // Mensagem de erro caso a internet caia
-    return (
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-        <h1 className="text-3xl font-bold text-red-600">Conexão Perdida</h1>
-        <p className="text-lg mt-2">Verifique sua conexão com a internet.</p>
-      </div>
-    );
-  }
-
-  if (loading) {
-    // Tela de carregamento
-    return (
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-        <h1 className="text-4xl font-semibold">Carregando...</h1>
-        <p className="text-lg mt-4">Aguarde enquanto carregamos o conteúdo.</p>
-        <div className="mt-6 flex justify-center">
-          <div className="animate-spin">
-            <svg
-              className="w-12 h-12 text-green-500"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-              />
-            </svg>
+      {/* Seção verde que cobre toda a largura */}
+      <section className="bg-green-200 text-black">
+        <div className="max-w-6xl mx-auto p-4 flex flex-col items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <Image
+              src="/imgs/investindo.svg"
+              alt="Homem e mulher analisando um gráfico"
+              width={320}
+              height={214}
+            />
+            <div>
+              <h1 className="text-2xl font-semibold">
+                Quem somos?
+              </h1>
+              <h2>
+                Nós somos EnergyCalc, uma empresa onde você consegue calcular seus gastos de energia e descobrir qual é o tipo de energia renovável ideal para você! 
+                Assim preservando o meio ambiente.
+              </h2>
+            </div>
           </div>
         </div>
-      </div>
-    );
-  }
+      </section>
 
-  return null; // Nenhuma tela de carregamento será exibida ao clicar em links
+      <section className="max-w-6xl mx-auto p-4 flex flex-col items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row-reverse items-center gap-4">
+          <Image
+            src="/imgs/contract.svg"
+            alt="Homem e mulher fechando um contrato"
+            width={320}
+            height={214}
+          />
+          <div>
+            <h1 className="text-2xl font-semibold">
+              Como fazer parte do nosso ecossistema?
+            </h1>
+            <h2>
+              Essa é uma tarefa bem simples! Entre em contato com a nossa equipe
+              que te falaremos mais sobre as informações necessárias!
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      {/* Modal de Login */}
+      {showLoginModal && (
+        <LoginForm
+          onClose={handleCloseLogin}
+          onSwitchToRegister={() => {
+            handleCloseLogin();
+            handleOpenRegister();
+          }}
+        />
+      )}
+
+      {/* Modal de Registro */}
+      {showRegisterModal && (
+        <RegisterForm
+          onClose={handleCloseRegister}
+          onSwitchToLogin={() => {
+            handleCloseRegister();
+            handleOpenLogin();
+          }}
+        />
+      )}
+    </main>
+  ); // Nenhuma tela de carregamento será exibida ao clicar em links
 }

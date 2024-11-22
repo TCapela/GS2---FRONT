@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
 import stateList from "@/data/states.json"
+import Link from "next/link";
 
 type Simulacao = {
   id: number;
@@ -245,6 +246,9 @@ export default function HistoricoSimulacoes() {
                           className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
                         >
                           Excluir
+                        </button>
+                          <button className ="ml-2 bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">
+                          <Link href={`/profile/historico/${simulacao.id}`}>Simulação</Link>
                         </button>
                       </td>
                     </tr>
